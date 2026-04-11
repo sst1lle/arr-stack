@@ -33,7 +33,7 @@ services:
       - 6881:6881/tcp
       - 6881:6881/udp
       - 9696:9696    # Prowlarr
-      - 8191:8191
+      - 8191:8191    # FlareSolverr
     restart: unless-stopped
 
   qbittorrent:
@@ -105,4 +105,46 @@ services:
       - /mnt/ssd/config/jellyseerr:/app/config
     ports:
       - 5055:5055
+    restart: unless-stopped
+
+  # ─── BOEKEN ─────────────────────────────────────────────────────
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /mnt/ssd/config/readarr:/config
+      - /mnt/ssd/media/books:/books
+      - /mnt/ssd/downloads:/downloads
+    ports:
+      - 8787:8787
+    restart: unless-stopped
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+    volumes:
+      - /mnt/ssd/config/calibre-web:/config
+      - /mnt/ssd/media/books:/books
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+
+  # ─── DASHBOARD ──────────────────────────────────────────────────
+  homarr:
+    image: ghcr.io/ajnart/homarr:latest
+    container_name: homarr
+    volumes:
+      - /mnt/ssd/config/homarr:/appdata/user-configs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 7575:7575
     restart: unless-stopped
