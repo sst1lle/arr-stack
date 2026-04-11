@@ -109,8 +109,7 @@ services:
 
   # ─── BOEKEN ─────────────────────────────────────────────────────
   readarr:
-    image: lscr.io/linuxserver/readarr:develop
-    platform: linux/arm64
+    image: lscr.io/linuxserver/readarr:latest
     container_name: readarr
     environment:
       - PUID=1000
