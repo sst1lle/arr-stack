@@ -120,7 +120,7 @@ services:
       - /mnt/ssd/media/books:/books
       - /mnt/ssd/downloads:/downloads
     ports:
-      - 8787:8787
+      - 8789:8789
     restart: unless-stopped
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
