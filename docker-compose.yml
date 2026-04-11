@@ -109,7 +109,7 @@ services:
 
   # ─── BOEKEN ─────────────────────────────────────────────────────
   readarr:
-    image: robertlordhood/chaptarr:latest
+    image: thraxis/lazylibrarian-calibre:latest
     container_name: readarr
     environment:
       - PUID=1000
@@ -117,10 +117,10 @@ services:
       - TZ=Europe/Amsterdam
     volumes:
       - /mnt/ssd/config/readarr:/config
-      - /mnt/ssd/media/books:/books
+      - /mnt/ssd/media/books/ebooks:/books
       - /mnt/ssd/downloads:/downloads
     ports:
-      - 8789:8789
+      - 5299:5299
     restart: unless-stopped
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
