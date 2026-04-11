@@ -34,6 +34,7 @@ services:
       - 6881:6881/udp
       - 9696:9696    # Prowlarr
       - 8191:8191    # FlareSolverr
+      - 5299:5299    # LazyLibrarian
     restart: unless-stopped
 
   qbittorrent:
@@ -120,8 +121,9 @@ services:
       - /mnt/ssd/config/readarr:/config
       - /mnt/ssd/media/books/ebooks:/books
       - /mnt/ssd/downloads:/downloads
-    ports:
-      - 5299:5299
+    network_mode: service:gluetun
+    depends_on:
+      - gluetun
     restart: unless-stopped
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
