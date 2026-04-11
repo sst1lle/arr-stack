@@ -109,12 +109,13 @@ services:
 
   # ─── BOEKEN ─────────────────────────────────────────────────────
   readarr:
-    image: thraxis/lazylibrarian-calibre:latest
+    image: lscr.io/linuxserver/lazylibrarian:latest
     container_name: readarr
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Amsterdam
+      - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg
     volumes:
       - /mnt/ssd/config/readarr:/config
       - /mnt/ssd/media/books/ebooks:/books
