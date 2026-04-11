@@ -1,0 +1,108 @@
+services:
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr-arr
+    environment:
+      - LOG_LEVEL=info
+    network_mode: service:gluetun
+    depends_on:
+      - gluetun
+    restart: unless-stopped
+
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${MULLVAD_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${MULLVAD_ADDRESS}
+      - SERVER_COUNTRIES=Netherlands
+      - FIREWALL_VPN_INPUT_PORTS=6881
+      - DOT_IPV6=off
+      - FIREWALL_OUTBOUND_SUBNETS=172.19.0.0/16
+      - FIREWALL_INPUT_PORTS=8080,9696,8191,6881
+      - UPDATER_PERIOD=24h
+    ports:
+      - 8080:8080    # qBittorrent
+      - 6881:6881/tcp
+      - 6881:6881/udp
+      - 9696:9696    # Prowlarr
+      - 8191:8191
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - WEBUI_PORT=8080
+    volumes:
+      - /mnt/ssd/config/qbittorrent:/config
+      - /mnt/ssd/downloads:/downloads
+    network_mode: service:gluetun
+    depends_on:
+      - gluetun
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /mnt/ssd/config/prowlarr:/config
+    network_mode: service:gluetun
+    depends_on:
+      - gluetun
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /mnt/ssd/config/radarr:/config
+      - /mnt/ssd/media/movies:/movies
+      - /mnt/ssd/downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /mnt/ssd/config/sonarr:/config
+      - /mnt/ssd/media/series:/tv
+      - /mnt/ssd/downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /mnt/ssd/config/jellyseerr:/app/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
