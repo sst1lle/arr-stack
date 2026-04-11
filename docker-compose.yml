@@ -109,7 +109,7 @@ services:
 
   # ─── BOEKEN ─────────────────────────────────────────────────────
   readarr:
-    image: lscr.io/linuxserver/readarr:latest
+    image: robertlordhood/chaptarr:latest
     container_name: readarr
     environment:
       - PUID=1000
