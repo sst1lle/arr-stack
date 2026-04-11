@@ -109,7 +109,7 @@ services:
 
   # ─── BOEKEN ─────────────────────────────────────────────────────
   readarr:
-    image: lscr.io/linuxserver/readarr:arm64v8-develop
+    image: hotio/readarr:nightly
     container_name: readarr
     environment:
       - PUID=1000
