@@ -155,4 +155,5 @@ services:
     volumes:
       - /mnt/ssd/config/homepage:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /mnt/ssd:/mnt/ssd:ro
     restart: unless-stopped
