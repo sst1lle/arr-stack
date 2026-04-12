@@ -145,12 +145,12 @@ services:
     restart: unless-stopped
 
   # ─── DASHBOARD ──────────────────────────────────────────────────
-  homarr:
-    image: ghcr.io/ajnart/homarr:latest
-    container_name: homarr
-    volumes:
-      - /mnt/ssd/config/homarr:/appdata/user-configs
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
     ports:
-      - 7575:7575
+      - 3000:3000
+    volumes:
+      - /mnt/ssd/config/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
