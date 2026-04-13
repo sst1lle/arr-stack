@@ -22,7 +22,7 @@ services:
       - VPN_TYPE=wireguard
       - WIREGUARD_PRIVATE_KEY=${MULLVAD_PRIVATE_KEY}
       - WIREGUARD_ADDRESSES=${MULLVAD_ADDRESS}
-      - SERVER_COUNTRIES=Netherlands
+      - SERVER_COUNTRIES=Romania
       - FIREWALL_VPN_INPUT_PORTS=6881
       - DOT_IPV6=off
       - DOT=off
