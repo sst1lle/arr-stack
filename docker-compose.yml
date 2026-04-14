@@ -33,12 +33,12 @@ services:
       - FIREWALL_INPUT_PORTS=8080,9696,8191,6881,5299
       - UPDATER_PERIOD=24h
     ports:
-      - 8080:8080    # qBittorrent
+      - 8080:8080 # qBittorrent
       - 6881:6881/tcp
       - 6881:6881/udp
-      - 9696:9696    # Prowlarr
-      - 8191:8191    # FlareSolverr
-      - 5299:5299    # LazyLibrarian
+      - 9696:9696 # Prowlarr
+      - 8191:8191 # FlareSolverr
+      - 5299:5299 # LazyLibrarian
     restart: unless-stopped
 
   qbittorrent:
@@ -113,22 +113,7 @@ services:
     restart: unless-stopped
 
   # ─── BOEKEN ─────────────────────────────────────────────────────
-  readarr:
-    image: lscr.io/linuxserver/lazylibrarian:latest
-    container_name: readarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Amsterdam
-      - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg
-    volumes:
-      - /mnt/ssd/config/readarr:/config
-      - /mnt/ssd/media/books/ebooks:/books
-      - /mnt/ssd/downloads:/downloads
-    network_mode: service:gluetun
-    depends_on:
-      - gluetun
-    restart: unless-stopped
+
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
     container_name: calibre-web
@@ -168,7 +153,7 @@ services:
       - 8085:80
     restart: unless-stopped
 
-#--- STATS --------------------
+  #--- STATS --------------------
   glances:
     image: nicolargo/glances:latest
     container_name: glances
