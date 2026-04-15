@@ -144,12 +144,13 @@ services:
     restart: unless-stopped
 
   filebrowser:
-    image: filebrowser/filebrowser:latest
-    container_name: filebrowser
-    volumes:
+     image: filebrowser/filebrowser:latest
+     container_name: filebrowser
+     volumes:
       - /mnt/ssd:/srv
       - /mnt/ssd/config/filebrowser:/database
-    ports:
+      - /mnt/ssd/config/filebrowser:/config
+      ports:
       - 8085:80
     restart: unless-stopped
 
