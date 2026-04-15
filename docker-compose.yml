@@ -143,7 +143,7 @@ services:
       - /mnt/ssd:/mnt/ssd:ro
     restart: unless-stopped
 
-  ffilebrowser:
+  filebrowser:
     image: filebrowser/filebrowser:latest
     container_name: filebrowser
     volumes:
