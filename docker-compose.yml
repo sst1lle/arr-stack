@@ -143,12 +143,9 @@ services:
       - /mnt/ssd:/mnt/ssd:ro
     restart: unless-stopped
 
-  filebrowser:
+  ffilebrowser:
     image: filebrowser/filebrowser:latest
     container_name: filebrowser
-    environment:
-      - FB_USERNAME=admin
-      - FB_PASSWORD=admin
     volumes:
       - /mnt/ssd:/srv
       - /mnt/ssd/config/filebrowser:/database
