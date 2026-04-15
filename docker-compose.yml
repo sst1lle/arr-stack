@@ -150,9 +150,9 @@ services:
       - /mnt/ssd:/srv
       - /mnt/ssd/config/filebrowser:/database
       - /mnt/ssd/config/filebrowser:/config
-      ports:
+     ports:
       - 8085:80
-    restart: unless-stopped
+     restart: unless-stopped
 
   #--- STATS --------------------
   glances:
